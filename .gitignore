@@ -1,0 +1,12 @@
+# Backend
+backend/JobTracker.API/bin/
+backend/JobTracker.API/obj/
+backend/JobTracker.API/.vs/
+backend/JobTracker.API/*.user
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Secrets
+appsettings.json
