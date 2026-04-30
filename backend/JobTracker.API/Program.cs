@@ -65,19 +65,27 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-app.Run();
+
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();
+    try
+    {
+        db.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Migration failed");
+        throw;
+    }
 }
-
-
 
 app.Run();
