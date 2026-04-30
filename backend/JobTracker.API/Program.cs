@@ -33,7 +33,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddCors(opt =>
     opt.AddDefaultPolicy(p =>
-        p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+        p.WithOrigins(
+            "http://localhost:5173",
+            "https://job-tracker-sable-omega.vercel.app"
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod()));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
