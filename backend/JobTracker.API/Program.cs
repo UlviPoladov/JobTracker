@@ -32,13 +32,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddCors(opt =>
-    opt.AddDefaultPolicy(p =>
-        p.WithOrigins(
-            "http://localhost:5173",
-            "https://job-tracker-sable-omega.vercel.app"
-        )
-        .AllowAnyHeader()
-        .AllowAnyMethod()));
+    opt.AddPolicy("AllowAll", p =>
+        p.AllowAnyOrigin()
+         .AllowAnyHeader()
+         .AllowAnyMethod()));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -70,7 +67,7 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
-app.UseCors();
+app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
